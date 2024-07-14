@@ -216,3 +216,12 @@ export function findNthPrime(n) {
   }
   return num - 1;
 }
+
+export function getIdValue(json) {
+  if (typeof json.id === "string") {
+    return json.id; // Directly return the string value
+  } else if (typeof json.id === "object" && json.id.videoId) {
+    return json.id.videoId; // Access the nested videoId property
+  }
+  return null; // Handle other cases (e.g., invalid response)
+}

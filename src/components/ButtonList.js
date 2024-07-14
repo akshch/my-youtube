@@ -1,27 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "./Button";
+import { YOUTUBE_CATEGORY_LIST_API } from "../utils/constants";
 
-const buttonNames = [
-  "ALL",
-  "Gaming",
-  "Songs",
-  "Live",
-  "Soccer",
-  "Cricket",
-  "Cooking",
-  "WWE",
-  "Valenties",
-  "Soccer",
-  "Cricket",
-  "Cooking",
-  "WWE",
-  "Valenties",
-];
 const ButtonList = () => {
+  const [buttonNames, setButtonNames] = useState([]);
+
+  useEffect(() => {
+    getCategoriesList();
+  }, []);
+
+  const getCategoriesList = async () => {
+    const data = await fetch(YOUTUBE_CATEGORY_LIST_API);
+    const json = await data.json();
+    setButtonNames(json.items);
+  };
   return (
     <div className="flex">
-      {buttonNames.map((name, index) => (
-        <Button key={index} name={name} />
+      {buttonNames.map((button) => (
+        <Button key={button.id} name={button.snippet.title} id={button.id} />
       ))}
     </div>
   );
